@@ -1,15 +1,467 @@
 @import 'variables';
-@import 'mixins'
+@import 'mixins';
 
+// Базовые стили
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html,
 body {
-    height: 100%;
+  height: 100%;
 }
 
-body {}
+body {
+  font-family: $font-family-sans;
+  font-size: $font-size-base;
+  line-height: 1.5;
+  color: $color-gray-800;
+  background-color: $color-gray-50;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root, .app {
+  height: 100%;
+}
+
+// Контейнеры
+.container {
+  width: 100%;
+  max-width: $container-max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $container-padding;
+  padding-right: $container-padding;
+}
+
+// Типографика
+h1, h2, h3, h4, h5, h6 {
+  font-weight: $font-weight-bold;
+  line-height: 1.2;
+  margin-bottom: $spacing-4;
+}
+
+h1 {
+  @include font-size('3xl');
+}
+
+h2 {
+  @include font-size('2xl');
+}
+
+h3 {
+  @include font-size('xl');
+}
+
+h4 {
+  @include font-size('lg');
+}
+
+p {
+  margin-bottom: $spacing-4;
+}
+
+a {
+  color: $color-primary;
+  text-decoration: none;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+code, pre {
+  font-family: $font-family-mono;
+}
+
+// Кнопки
+.btn {
+  @include button('primary', 'md');
+
+  &-primary {
+    @include button('primary', 'md');
+  }
+  
+  &-secondary {
+    @include button('secondary', 'md');
+  }
+  
+  &-accent {
+    @include button('accent', 'md');
+  }
+  
+  &-outline {
+    @include button('outline', 'md');
+  }
+  
+  &-sm {
+    @include button('primary', 'sm');
+  }
+  
+  &-lg {
+    @include button('primary', 'lg');
+  }
+}
+
+// Основные компоненты приложения
+.challenge-app {
+  @include flex(column);
+  min-height: 100%;
+  
+  &__header {
+    @include gradient('to right', $color-primary, $color-primary-light);
+    color: $color-white;
+    padding: $spacing-6;
+    @include shadow('md');
+    
+    &-container {
+      @include flex(row, space-between, center);
+    }
+    
+    &-title {
+      @include flex(row, flex-start, center);
+      h1 {
+        margin-bottom: 0;
+      }
+      
+      svg {
+        margin-right: $spacing-3;
+      }
+    }
+    
+    &-badge {
+      padding: $spacing-1 $spacing-3;
+      background-color: rgba($color-white, 0.2);
+      border-radius: $border-radius-full;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+    }
+    
+    &-subtitle {
+      margin-top: $spacing-3;
+      color: rgba($color-white, 0.9);
+      max-width: 36rem;
+    }
+  }
+  
+  &__main {
+    flex: 1;
+    padding: $spacing-6;
+  }
+  
+  &__footer {
+    background-color: $color-gray-900;
+    color: $color-gray-400;
+    padding: $spacing-6;
+    text-align: center;
+  }
+  
+  &__controls {
+    @include flex(row, space-between, center);
+    margin-bottom: $spacing-6;
+    
+    @include breakpoint-down(md) {
+      @include flex(column, flex-start, flex-start);
+      gap: $spacing-4;
+    }
+    
+    &-title {
+      @include font-size('2xl');
+      font-weight: $font-weight-bold;
+      color: $color-gray-800;
+      margin-bottom: 0;
+    }
+    
+    &-buttons {
+      @include flex(row);
+      gap: $spacing-3;
+    }
+  }
+  
+  &__code {
+    @include card;
+    overflow: hidden;
+    margin-bottom: $spacing-8;
+    
+    &-header {
+      background-color: $color-gray-900;
+      padding: $spacing-4;
+      @include flex(row, space-between, center);
+      
+      &-title {
+        @include flex(row, flex-start, center);
+        color: $color-gray-300;
+        font-family: $font-family-mono;
+        font-size: $font-size-sm;
+        
+        svg {
+          margin-right: $spacing-2;
+        }
+      }
+      
+      &-dots {
+        @include flex(row);
+        gap: $spacing-2;
+        
+        .dot {
+          width: $spacing-3;
+          height: $spacing-3;
+          border-radius: $border-radius-full;
+          
+          &--red {
+            background-color: $color-error;
+          }
+          
+          &--yellow {
+            background-color: $color-warning;
+          }
+          
+          &--green {
+            background-color: $color-success;
+          }
+        }
+      }
+    }
+    
+    &-content {
+      background-color: $color-gray-900;
+      color: $color-gray-50;
+      padding: $spacing-5;
+      font-family: $font-family-mono;
+      font-size: $font-size-sm;
+      line-height: 1.6;
+      overflow: auto;
+      height: 24rem;
+      
+      code {
+        display: block;
+      }
+    }
+  }
+  
+  &__answer {
+    @include card;
+    padding: $spacing-6;
+    margin-bottom: $spacing-8;
+    
+    &-title {
+      font-weight: $font-weight-semibold;
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-4;
+      color: $color-gray-800;
+    }
+    
+    &-subtitle {
+      color: $color-gray-600;
+      font-size: $font-size-sm;
+      margin-bottom: $spacing-4;
+    }
+    
+    &-textarea {
+      width: 100%;
+      padding: $spacing-4;
+      border: 1px solid $color-gray-200;
+      border-radius: $border-radius-lg;
+      min-height: 10rem;
+      font-family: $font-family-mono;
+      font-size: $font-size-sm;
+      color: $color-gray-800;
+      margin-bottom: $spacing-5;
+      
+      &:focus {
+        outline: none;
+        border-color: $color-primary;
+        box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+      }
+    }
+  }
+  
+  &__result {
+    @include card;
+    padding: $spacing-6;
+    margin-bottom: $spacing-8;
+    @include flex(row, flex-start, flex-start);
+    
+    &--correct {
+      border-left: 4px solid $color-success;
+      background-color: rgba($color-success, 0.05);
+    }
+    
+    &--incorrect {
+      border-left: 4px solid $color-error;
+      background-color: rgba($color-error, 0.05);
+    }
+    
+    &-icon {
+      padding: $spacing-4;
+      border-radius: $border-radius-full;
+      margin-right: $spacing-4;
+      
+      &--correct {
+        background-color: rgba($color-success, 0.1);
+        color: $color-success;
+      }
+      
+      &--incorrect {
+        background-color: rgba($color-error, 0.1);
+        color: $color-error;
+      }
+    }
+    
+    &-content {
+      flex: 1;
+    }
+    
+    &-title {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-bold;
+      margin-bottom: $spacing-3;
+      
+      &--correct {
+        color: $color-success;
+      }
+      
+      &--incorrect {
+        color: $color-error;
+      }
+    }
+    
+    &-text {
+      color: $color-gray-700;
+    }
+    
+    &-answer {
+      margin-top: $spacing-4;
+      
+      &-title {
+        font-weight: $font-weight-semibold;
+        color: $color-gray-800;
+        margin-bottom: $spacing-2;
+      }
+      
+      &-code {
+        background-color: $color-white;
+        border: 1px solid $color-gray-200;
+        border-radius: $border-radius-lg;
+        padding: $spacing-4;
+        font-family: $font-family-mono;
+        font-size: $font-size-sm;
+        white-space: pre-wrap;
+      }
+    }
+  }
+  
+  &__error {
+    @include card;
+    padding: $spacing-6;
+    margin-bottom: $spacing-8;
+    @include flex(row, flex-start, flex-start);
+    border-left: 4px solid $color-warning;
+    background-color: rgba($color-warning, 0.05);
+    
+    &-icon {
+      padding: $spacing-4;
+      border-radius: $border-radius-full;
+      background-color: rgba($color-warning, 0.1);
+      color: $color-warning;
+      margin-right: $spacing-4;
+    }
+    
+    &__error {
+        @include card;
+        padding: $spacing-6;
+        margin-bottom: $spacing-8;
+        @include flex(row, flex-start, flex-start);
+        border-left: 4px solid $color-warning;
+        background-color: rgba($color-warning, 0.05);
+        
+        &-icon {
+          padding: $spacing-4;
+          border-radius: $border-radius-full;
+          background-color: rgba($color-warning, 0.1);
+          color: $color-warning;
+          margin-right: $spacing-4;
+        }
+        
+        &-content {
+          flex: 1;
+        }
+        
+        &-title {
+          font-size: $font-size-xl;
+          font-weight: $font-weight-bold;
+          margin-bottom: $spacing-3;
+          color: $color-warning;
+        }
+        
+        &-text {
+          color: $color-gray-700;
+        }
+      }
+      
+      &__footer {
+        background-color: $color-gray-900;
+        color: $color-gray-400;
+        padding: $spacing-6;
+        
+        &-content {
+          @include flex(row, space-between, center);
+          
+          @include breakpoint-down(md) {
+            @include flex(column, center, center);
+            gap: $spacing-2;
+          }
+        }
+        
+        &-copyright {
+          font-size: $font-size-sm;
+          opacity: 0.75;
+        }
+      }
+    }
+    
+    // Вспомогательные классы
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    
+    // Адаптивность
+    @include breakpoint-down(md) {
+      .container {
+        padding-left: $spacing-4;
+        padding-right: $spacing-4;
+      }
+      
+      .challenge-app {
+        &__header {
+          padding: $spacing-4;
+        }
+        
+        &__main {
+          padding: $spacing-4;
+        }
+        
+        &__controls {
+          margin-bottom: $spacing-4;
+        }
+        
+        &__code,
+        &__answer,
+        &__result,
+        &__error {
+          margin-bottom: $spacing-4;
+        }
+      }
+    }
+}
