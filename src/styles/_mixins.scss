@@ -1,0 +1,186 @@
+// Медиа-запросы
+@mixin breakpoint-up($breakpoint) {
+    @if $breakpoint == sm {
+      @media (min-width: $breakpoint-sm) { @content; }
+    } @else if $breakpoint == md {
+      @media (min-width: $breakpoint-md) { @content; }
+    } @else if $breakpoint == lg {
+      @media (min-width: $breakpoint-lg) { @content; }
+    } @else if $breakpoint == xl {
+      @media (min-width: $breakpoint-xl) { @content; }
+    } @else if $breakpoint == 2xl {
+      @media (min-width: $breakpoint-2xl) { @content; }
+    }
+  }
+  
+  @mixin breakpoint-down($breakpoint) {
+    @if $breakpoint == sm {
+      @media (max-width: $breakpoint-sm ) { @content; }
+    } @else if $breakpoint == md {
+      @media (max-width: $breakpoint-md ) { @content; }
+    } @else if $breakpoint == lg {
+      @media (max-width: $breakpoint-lg) { @content; }
+    } @else if $breakpoint == xl {
+      @media (max-width: $breakpoint-xl) { @content; }
+    } @else if $breakpoint == 2xl {
+      @media (max-width: $breakpoint-2xl) { @content; }
+    }
+  }
+  
+  // Флексбокс
+  @mixin flex($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+    flex-wrap: $wrap;
+  }
+  
+  // Центрирование
+  @mixin center($type: 'both') {
+    @if $type == 'both' {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    } @else if $type == 'horizontal' {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    } @else if $type == 'vertical' {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+  
+  // Тени
+  @mixin shadow($size: 'md') {
+    @if $size == 'sm' {
+      box-shadow: $shadow-sm;
+    } @else if $size == 'md' {
+      box-shadow: $shadow-md;
+    } @else if $size == 'lg' {
+      box-shadow: $shadow-lg;
+    } @else if $size == 'xl' {
+      box-shadow: $shadow-xl;
+    } @else if $size == 'none' {
+      box-shadow: none;
+    }
+  }
+  
+  // Типографика
+  @mixin font-size($size) {
+    @if $size == 'xs' {
+      font-size: $font-size-xs;
+    } @else if $size == 'sm' {
+      font-size: $font-size-sm;
+    } @else if $size == 'base' {
+      font-size: $font-size-base;
+    } @else if $size == 'lg' {
+      font-size: $font-size-lg;
+    } @else if $size == 'xl' {
+      font-size: $font-size-xl;
+    } @else if $size == '2xl' {
+      font-size: $font-size-2xl;
+    } @else if $size == '3xl' {
+      font-size: $font-size-3xl;
+    } @else if $size == '4xl' {
+      font-size: $font-size-4xl;
+    }
+  }
+  
+  // Градиент
+  @mixin gradient($direction: 'to right', $start: $color-primary, $end: $color-primary-light) {
+    background: linear-gradient(#{$direction}, #{$start}, #{$end});
+  }
+  
+  // Переходы
+  @mixin transition($properties: all, $duration: $transition-normal, $timing-function: $transition-ease) {
+    transition-property: $properties;
+    transition-duration: $duration;
+    transition-timing-function: $timing-function;
+  }
+  
+  // Обрезка текста и многоточие
+  @mixin truncate($lines: 1) {
+    @if $lines == 1 {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    } @else {
+      display: -webkit-box;
+      -webkit-line-clamp: $lines;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+  
+  // Кнопки
+  @mixin button($variant: 'primary', $size: 'md') {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    @include transition(all);
+    
+    @if $variant == 'primary' {
+      background-color: $color-primary;
+      color: $color-white;
+      
+      &:hover {
+        background-color: $color-primary-dark;
+      }
+    } @else if $variant == 'secondary' {
+      background-color: $color-gray-200;
+      color: $color-gray-800;
+      
+      &:hover {
+        background-color: $color-gray-300;
+      }
+    } @else if $variant == 'accent' {
+      background-color: $color-accent;
+      color: $color-white;
+      
+      &:hover {
+        background-color: $color-accent-dark;
+      }
+    } @else if $variant == 'outline' {
+      background-color: transparent;
+      border: 1px solid $color-gray-300;
+      color: $color-gray-800;
+      
+      &:hover {
+        background-color: $color-gray-100;
+      }
+    }
+    
+    @if $size == 'sm' {
+      padding: $spacing-1 $spacing-2;
+      @include font-size('sm');
+      border-radius: $border-radius-md;
+    } @else if $size == 'md' {
+      padding: $spacing-2 $spacing-4;
+      @include font-size('base');
+      border-radius: $border-radius-lg;
+    } @else if $size == 'lg' {
+      padding: $spacing-3 $spacing-6;
+      @include font-size('lg');
+      border-radius: $border-radius-lg;
+    }
+    
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+  
+  // Карточка
+  @mixin card {
+    background-color: $color-white;
+    border-radius: $border-radius-xl;
+    @include shadow('md');
+    border: 1px solid $color-gray-200;
+  }
