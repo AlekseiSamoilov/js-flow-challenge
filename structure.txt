@@ -1,0 +1,29 @@
+js-flow-challenge/
+├── node_modules/
+├── public/
+│   ├── index.html
+│   └── favicon.ico
+├── src/
+│   ├── components/
+│   │   └── CodeChallengeApp.tsx      # Основной компонент приложения
+│   ├── data/
+│   │   └── codeBlocks.json           # JSON с блоками кода
+│   ├── hooks/
+│   │   └── useCodeExecution.ts       # Хук для генерации и выполнения кода
+│   ├── services/
+│   │   ├── codeBlocksLoader.ts       # Загрузка блоков из JSON
+│   │   ├── codeBlocksService.ts      # Сервис для генерации задач
+│   │   └── codeExecutionService.ts   # Сервис выполнения кода через Web Worker
+│   ├── styles/
+│   │   ├── _mixins.scss              # SCSS миксины
+│   │   ├── _variables.scss           # SCSS переменные
+│   │   └── main.scss                 # Основной файл стилей
+│   ├── types/
+│   │   ├── index.ts                  # Основные типы приложения
+│   │   └── json.d.ts                 # Декларация для импорта JSON
+│   ├── App.tsx                       # Корневой компонент React
+│   └── index.tsx                     # Точка входа приложения
+├── .gitignore
+├── package.json
+├── tsconfig.json
+└── README.md
