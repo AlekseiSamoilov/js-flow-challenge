@@ -59,6 +59,45 @@ export const useCodeExecution = (): IUseCodeExecutionReturn => {
     }, [userAnswer, actualOutput]);
 
     const runCodeInBrowser = useCallback(async () => {
+        if (!challenge) return;
 
-    })
+        setIsLoading(true);
+        try {
+            const result = await executeCode(challenge.code);
+
+            if (result.success) {
+                const output = (result.logs || []).join('\n');
+                setActualOutput(output);
+
+                setChallenge(prevChallenge => {
+                    if (prevChallenge) {
+                        return {
+                            ...prevChallenge,
+                            output
+                        };
+                    }
+                    return prevChallenge;
+                });
+            } else {
+                setExecutionError(`Ошибка при выполнении кода: ${result.error}`);
+            }
+        } catch (error) {
+            setExecutionError(`Ошибка при выполнении кода: ${(error as Error).message}`);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [challenge]);
+
+    return {
+        challenge,
+        userAnswer,
+        setUserAnswer,
+        actualOutput,
+        isCorrect,
+        isLoading,
+        executionError,
+        generateNewChallenge,
+        checkAnswer,
+        runCodeInBrowser
+    };
 }
